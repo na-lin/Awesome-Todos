@@ -16,7 +16,7 @@ export default function SideBar() {
           px: 4,
           pt: 2,
           border: 1,
-          height: "80vh",
+          height: "100vh",
         }}
       >
         <IconButton aria-label="user" size="large">
