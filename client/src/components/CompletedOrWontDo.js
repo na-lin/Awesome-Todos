@@ -44,7 +44,7 @@ export default function CompletedOrWontDo() {
 
   return (
     <Box>
-      <Accordion>
+      <Accordion sx={{ bgcolor: "#f9a8d4" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           id="todo-panel"

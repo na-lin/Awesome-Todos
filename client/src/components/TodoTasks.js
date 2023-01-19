@@ -44,7 +44,7 @@ export default function TodoTasks() {
 
   return (
     <Box>
-      <Accordion>
+      <Accordion sx={{ bgcolor: "#bef264" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           id="todo-panel"
