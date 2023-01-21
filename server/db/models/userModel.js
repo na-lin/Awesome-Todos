@@ -54,11 +54,6 @@ User.addHook("beforeSave", (user) => {
   user.passwordChangedAt = Date.now() - 1000;
 });
 
-// @desc: before find user, exclude user that active = false;
-User.addHook("beforeFind", function (options) {
-  options.where = { ...options.where, active: true };
-});
-
 // @desc: exclude password, passwordConfirm field
 User.prototype.excludePasswordField = function () {
   this.password = undefined;
