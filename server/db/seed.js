@@ -1,7 +1,7 @@
 const colors = require("colors");
-const { db, Example } = require("./index");
+const { db, User } = require("./index");
 
-const exampleData = require("./data/example");
+const usersData = require("./data/users");
 
 const seed = async () => {
   try {
@@ -9,11 +9,19 @@ const seed = async () => {
     console.log("db synced".yellow);
 
     // seed your data
-    await Promise.all(
-      exampleData.map((data) => {
-        return Example.create(data);
+    const users = await Promise.all(
+      usersData.map((data) => {
+        return User.create(data);
       })
     );
+
+    await Promise.all(
+      users.map((user) => {
+        user.passwordConfirm = "";
+        return user.save({ validate: false });
+      })
+    );
+
     console.log("Seeding success!".underline.green);
     db.close();
   } catch (err) {
