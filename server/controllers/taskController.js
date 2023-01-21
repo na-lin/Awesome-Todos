@@ -2,6 +2,31 @@ const asyncHandler = require("express-async-handler");
 const AppError = require("../utils/appError");
 const { Task, Date, Detail } = require("../db");
 
+// @desc: Get all tasks of this user include date
+// @route: GET /api/task/
+// @access: Private
+const getAllTasks = asyncHandler(async (req, res, next) => {
+  const allTasks = await Task.findAll({
+    where: {
+      userId: req.user.id,
+    },
+    attributes: ["id", "title", "state", "priority"],
+    include: [
+      {
+        model: Date,
+        attributes: ["date"],
+      },
+    ],
+    order: ["id"],
+  });
+
+  res.status(200).json({
+    status: "success",
+    results: allTasks.length,
+    data: allTasks,
+  });
+});
+
 // @desc: Create a task
 // @route: POST /api/task
 // @access: Private
@@ -25,4 +50,4 @@ const createNewTask = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { createNewTask };
+module.exports = { getAllTasks, createNewTask };
