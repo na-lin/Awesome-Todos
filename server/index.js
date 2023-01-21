@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-dotenv.config({ path: "../.env" });
+dotenv.config();
 const colors = require("colors");
 const keys = require("./config/dev");
 
