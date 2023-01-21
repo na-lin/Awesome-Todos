@@ -22,11 +22,6 @@ app.use(express.static(`${__dirname}/public`));
 // Routes
 app.use("/api", require("./routes/apiRouter"));
 
-// Send index.html for SPAs
-app.get("*", (req, res) => {
-  res.sendFile(`${__dirname}/public/index.html`);
-});
-
 // Error Handler
 app.use(notFound);
 app.use(glbalErrorHandler);
