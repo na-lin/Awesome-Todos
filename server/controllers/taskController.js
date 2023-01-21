@@ -17,7 +17,7 @@ const getAllTasks = asyncHandler(async (req, res, next) => {
         attributes: ["date"],
       },
     ],
-    order: ["id"],
+    order: [[Date, "date"], "id"],
   });
 
   res.status(200).json({
