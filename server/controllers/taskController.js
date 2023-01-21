@@ -39,12 +39,14 @@ const createNewTask = asyncHandler(async (req, res, next) => {
     taskDate.setTask(task);
   }
   task.setUser(req.user);
-  task.userId = undefined;
 
   res.status(201).json({
     status: "success",
     task: {
-      ...task.toJSON(),
+      id: task.id,
+      title: task.title,
+      state: task.state,
+      priority: task.priority,
       date: taskDate?.date,
     },
   });
