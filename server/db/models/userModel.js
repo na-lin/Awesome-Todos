@@ -2,6 +2,7 @@ const db = require("../database");
 const Sequelize = require("sequelize");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const keys = require("../../config/dev");
 const AppError = require("../../utils/appError");
 
 const User = db.define("user", {
@@ -64,8 +65,8 @@ User.prototype.excludePasswordField = function () {
 
 // @desc: generate jwt token
 User.prototype.generateToken = function () {
-  return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
+  return jwt.sign({ id: this.id }, keys.JWT_SECRET, {
+    expiresIn: keys.JWT_EXPIRES,
   });
 };
 
@@ -77,7 +78,7 @@ User.prototype.correctPassword = async function (candidatePwd) {
 // @desc: find user by token, if user don't exist, or token is invalid, throw error
 User.verfiyToken = async function (token) {
   try {
-    const decode = await jwt.verify(token, process.env.JWT_SECRET);
+    const decode = await jwt.verify(token, keys.JWT_SECRET);
     return decode;
   } catch (err) {
     throw new AppError("Invalid Token, Please try to login in again.", 401);
