@@ -27,6 +27,30 @@ const getAllTasks = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc: Get entire detail of a task
+// @route: GET /api/task/:taskId
+// @access: Private
+const getTask = asyncHandler(async (req, res, next) => {
+  const task = await Task.findOne({
+    where: {
+      id: req.params.taskId,
+    },
+    include: [
+      {
+        model: Date,
+        attributes: ["date"],
+      },
+      { model: Detail, attributes: ["detail"] },
+    ],
+  });
+  res.status(200).json({
+    status: "success",
+    date: {
+      task,
+    },
+  });
+});
+
 // @desc: Create a task
 // @route: POST /api/task
 // @access: Private
@@ -50,6 +74,25 @@ const createNewTask = asyncHandler(async (req, res, next) => {
       date: taskDate?.date,
     },
   });
+});
+
+// TODO:
+// @desc: Update a task about title, state,priority,date
+// @route: PUT /api/task/:taskId
+// @access: Private
+
+// TODO:
+// @desc: delete a task
+// @route: DELETE /api/task/:taskId
+// @access: Private
+const deleteTask = asyncHandler(async (req, res, next) => {
+  await Task.destroy({
+    where: {
+      id: req.params.taskId,
+    },
+    logging: true,
+  });
+  res.status(204).json({});
 });
 
 // @desc: update detail of task
@@ -103,7 +146,7 @@ const getTaskDetail = asyncHandler(async (req, res, next) => {
   });
 
   if (!taskDetail) {
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       date: {
         detail: "There is not detail for this task yet.",
@@ -119,4 +162,11 @@ const getTaskDetail = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { getAllTasks, createNewTask, updateDetail, getTaskDetail };
+module.exports = {
+  getAllTasks,
+  getTask,
+  createNewTask,
+  updateDetail,
+  getTaskDetail,
+  deleteTask,
+};
