@@ -52,4 +52,44 @@ const createNewTask = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { getAllTasks, createNewTask };
+// @desc: update detail of task
+// @route: PUT /api/task/:taskId/detail
+// @access: Private
+const updateDetail = asyncHandler(async (req, res, next) => {
+  const existedTaskDetail = await Detail.findOne({
+    where: {
+      taskId: req.params.taskId,
+    },
+  });
+
+  if (!existedTaskDetail) {
+    const taskDetail = await Detail.create({ detail: req.body.detail });
+    taskDetail.taskId = req.params.taskId;
+    await taskDetail.save();
+    return res.status(201).json({
+      status: "success",
+      date: {
+        detail: taskDetail,
+      },
+    });
+  }
+
+  const [_, updatedTaskDetail] = await Detail.update(
+    { detail: req.body.detail },
+    {
+      where: {
+        taskId: req.params.taskId,
+      },
+      returning: true,
+    }
+  );
+
+  res.status(200).json({
+    status: "success",
+    date: {
+      detail: updatedTaskDetail[0],
+    },
+  });
+});
+
+module.exports = { getAllTasks, createNewTask, updateDetail };
