@@ -5,11 +5,15 @@ const {
   getAllTasks,
   createNewTask,
   updateDetail,
+  getTaskDetail,
 } = require("../controllers/taskController");
 
 // route start with /api/task
 router.route("/").get(protect, getAllTasks).post(protect, createNewTask);
 
-router.put("/:taskId/detail", protect, updateDetail);
+router
+  .route("/:taskId/detail")
+  .put(protect, updateDetail)
+  .get(protect, getTaskDetail);
 
 module.exports = router;

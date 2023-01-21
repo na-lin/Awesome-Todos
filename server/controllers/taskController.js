@@ -92,4 +92,31 @@ const updateDetail = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { getAllTasks, createNewTask, updateDetail };
+// @desc: get detail of task
+// @route: GET /api/task/:taskId/detail
+// @access: Private
+const getTaskDetail = asyncHandler(async (req, res, next) => {
+  const taskDetail = await Detail.findOne({
+    where: {
+      taskId: req.params.taskId,
+    },
+  });
+
+  if (!taskDetail) {
+    res.status(200).json({
+      status: "success",
+      date: {
+        detail: "There is not detail for this task yet.",
+      },
+    });
+  }
+
+  res.status(200).json({
+    status: "success",
+    date: {
+      detail: taskDetail,
+    },
+  });
+});
+
+module.exports = { getAllTasks, createNewTask, updateDetail, getTaskDetail };
