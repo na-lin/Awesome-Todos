@@ -9,11 +9,11 @@ const Date = require("./models/dateModel");
 User.hasMany(Task);
 Task.belongsTo(User);
 
-Task.hasOne(Detail);
-Detail.belongsTo(Task);
+Task.hasOne(Detail, { foreignKeyConstraint: true, onDelete: "CASCADE" });
+Detail.belongsTo(Task, { foreignKeyConstraint: true, onDelete: "CASCADE" });
 
-Task.hasOne(Date);
-Date.belongsTo(Task);
+Task.hasOne(Date, { foreignKeyConstraint: true, onDelete: "CASCADE" });
+Date.belongsTo(Task, { foreignKeyConstraint: true, onDelete: "CASCADE" });
 
 module.exports = {
   db,
