@@ -12,6 +12,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 // redux
 import { useFetchLoggedInUserQuery } from "../store";
 
+// router
+import { useNavigate } from "react-router-dom";
+
 export default function NavBar() {
   // user drop down menu
   const [anchorEl, setAnchorEl] = useState(null);
@@ -21,6 +24,13 @@ export default function NavBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  // navigate user to login page once user click signin menu item
+  const navigate = useNavigate();
+  const handleNavToLogin = () => {
+    setAnchorEl(null);
+    navigate("/login");
   };
 
   // fetch login state
@@ -54,7 +64,7 @@ export default function NavBar() {
           "aria-labelledby": "user-menu-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Sign In</MenuItem>
+        <MenuItem onClick={handleNavToLogin}>Sign In</MenuItem>
         {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
       </Menu>
     </Box>
