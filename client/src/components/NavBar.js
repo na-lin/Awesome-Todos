@@ -8,7 +8,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+// redux
+import { useFetchLoggedInUserQuery } from "../store";
+
 export default function NavBar() {
+  // user drop down menu
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,6 +23,9 @@ export default function NavBar() {
     setAnchorEl(null);
   };
 
+  // fetch login state
+  const { data, error, isLoading } = useFetchLoggedInUserQuery();
+  console.log(data, error, isLoading);
   return (
     <Box
       sx={{

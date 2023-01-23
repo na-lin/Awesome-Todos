@@ -4,6 +4,11 @@ const userApi = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3010",
+    prepareHeaders: (headers, { getState }) => {
+      const token = JSON.parse(localStorage.getItem("jwt"));
+      headers.set("Authentication", `Bearer ${token}`);
+      return headers;
+    },
   }),
   endpoints(builder) {
     return {
