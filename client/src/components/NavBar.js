@@ -66,8 +66,11 @@ export default function NavBar() {
           "aria-labelledby": "user-menu-button",
         }}
       >
-        <MenuItem onClick={handleNavToLogin}>Sign In</MenuItem>
-        {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+        {data && data.user ? (
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        ) : (
+          <MenuItem onClick={handleNavToLogin}>Sign In</MenuItem>
+        )}
       </Menu>
     </Box>
   );
