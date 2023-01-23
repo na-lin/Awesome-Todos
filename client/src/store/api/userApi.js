@@ -6,13 +6,14 @@ const userApi = createApi({
     baseUrl: "http://localhost:3010",
     prepareHeaders: (headers, { getState }) => {
       const token = JSON.parse(localStorage.getItem("jwt"));
-      headers.set("Authentication", `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
       return headers;
     },
   }),
   endpoints(builder) {
     return {
       fetchLoggedInUser: builder.query({
+        providesTags: ["user"],
         query: () => {
           return {
             url: "/api/auth/getme",
@@ -20,9 +21,20 @@ const userApi = createApi({
           };
         },
       }),
+
+      userLogin: builder.mutation({
+        invalidatesTags: ["user"],
+        query: (body) => {
+          return {
+            url: "/api/auth/login",
+            method: "POST",
+            body,
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useFetchLoggedInUserQuery } = userApi;
+export const { useFetchLoggedInUserQuery, useUserLoginMutation } = userApi;
 export { userApi };
