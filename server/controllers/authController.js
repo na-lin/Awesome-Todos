@@ -120,4 +120,14 @@ const protect = asyncHandler(async (req, res, next) => {
   next();
 });
 
-module.exports = { getMe, signup, login, protect };
+// @desc: user log out
+// @route: /api/auth/logout
+// @access: Private
+const logout = asyncHandler(async (req, res, next) => {
+  res.status(200).json({
+    status: "success",
+    token: "",
+  });
+});
+
+module.exports = { getMe, signup, login, protect, logout };
