@@ -14,4 +14,4 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export { useFetchLoggedInUserQuery } from "./api/userApi";
+export { useFetchLoggedInUserQuery, useUserLoginMutation } from "./api/userApi";
