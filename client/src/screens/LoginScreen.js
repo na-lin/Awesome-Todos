@@ -10,10 +10,14 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-// import { login } from "../store";
-// import { useDispatch, useSelector } from "react-redux";
+
+// router
 import { useNavigate, Link } from "react-router-dom";
 
+// redux
+import { useUserLoginMutation } from "../store";
+
+// validate for formik
 const valiate = yup.object({
   email: yup
     .string("Enter your email")
@@ -26,9 +30,21 @@ const valiate = yup.object({
 });
 
 export default function LoginScreen() {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { isLoading, user, error } = useSelector((state) => state.auth);
+  const [userLogin, { data, error, isLoading }] = useUserLoginMutation();
+
+  useEffect(() => {
+    if (data && data.token) {
+      localStorage.setItem("jwt", JSON.stringify(data.token));
+      navigate("/");
+    }
+  }, [data, navigate]);
+
+  useEffect(() => {
+    if (localStorage.getItem("jwt")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const formik = useFormik({
     initialValues: {
@@ -37,11 +53,9 @@ export default function LoginScreen() {
     },
     validationSchema: valiate,
     onSubmit: (values) => {
-      // dispatch(login(values));
-      console.log(values);
+      userLogin(values);
     },
   });
-
 
   return (
     <div>
