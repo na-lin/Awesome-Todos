@@ -80,8 +80,33 @@ const createNewTask = asyncHandler(async (req, res, next) => {
 // @desc: Update a task about title, state,priority,date
 // @route: PUT /api/task/:taskId
 // @access: Private
+const updateTask = asyncHandler(async (req, res, next) => {
+  const [countTask, updatedTask] = await Task.update(req.body, {
+    where: {
+      id: req.params.taskId,
+    },
+    returning: true,
+  });
 
-// TODO:
+  const [countDate, updatedDate] = await Date.update(
+    { date: req.body.date },
+    {
+      where: {
+        taskId: req.params.taskId,
+      },
+      returning: true,
+    }
+  );
+  console.log(updatedTask[0]);
+  res.status(200).json({
+    status: "success",
+    date: {
+      task: updatedTask[0],
+      date: updatedDate[0],
+    },
+  });
+});
+
 // @desc: delete a task
 // @route: DELETE /api/task/:taskId
 // @access: Private
@@ -169,4 +194,5 @@ module.exports = {
   updateDetail,
   getTaskDetail,
   deleteTask,
+  updateTask,
 };
