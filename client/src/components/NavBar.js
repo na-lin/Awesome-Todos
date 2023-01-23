@@ -13,7 +13,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useFetchLoggedInUserQuery } from "../store";
 
 // router
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   // user drop down menu
@@ -45,7 +45,9 @@ export default function NavBar() {
         p: 4,
       }}
     >
-      <Typography variant="h4">Awesome Todos</Typography>
+      <Typography variant="h4">
+        <Link to={"/"}>Awesome Todos</Link>
+      </Typography>
       <Button
         id="user-menu-button"
         aria-controls={open ? "user-menu-button" : undefined}
