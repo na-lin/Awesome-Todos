@@ -2,6 +2,15 @@ const asyncHandler = require("express-async-handler");
 const AppError = require("../utils/appError");
 const { User } = require("../db");
 
+// @desc: get logged in user data
+// @route: GET /api/auth/getme
+// @access: Private
+const getMe = asyncHandler(async (req, res, next) => {
+  res.status(200).json({
+    user: req.user.excludePasswordField(),
+  });
+});
+
 // @desc: Create new user
 // @route: POST /api/auth/signup
 // @access: Private
@@ -111,4 +120,4 @@ const protect = asyncHandler(async (req, res, next) => {
   next();
 });
 
-module.exports = { signup, login, protect };
+module.exports = { getMe, signup, login, protect };
