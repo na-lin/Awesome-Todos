@@ -3,17 +3,7 @@ import React from "react";
 import logo from "../images/favicon.ico";
 import hero from "../images/hero-img.svg";
 // MUI
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  Typography,
-  Button,
-  ImageList,
-  ImageListItem,
-  Stack,
-} from "@mui/material";
-import { Container } from "@mui/system";
+import { Box, Typography, Button, Container } from "@mui/material";
 
 export default function LandingScreen() {
   return (
