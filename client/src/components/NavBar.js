@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -10,7 +10,7 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 // redux
-import { useFetchLoggedInUserQuery } from "../store";
+import { useFetchLoggedInUserQuery, useUserLogoutMutation } from "../store";
 
 // router
 import { Link, useNavigate } from "react-router-dom";
@@ -35,7 +35,15 @@ export default function NavBar() {
 
   // fetch login state
   const { data, error, isLoading } = useFetchLoggedInUserQuery();
-  console.log(data, error, isLoading);
+  console.log("fetch logged in user ", data, error, isLoading);
+
+  // implement user logout
+  const [userLogout, { logoutData }] = useUserLogoutMutation();
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    userLogout();
+  };
+
   return (
     <Box
       sx={{
@@ -67,7 +75,7 @@ export default function NavBar() {
         }}
       >
         {data && data.user ? (
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         ) : (
           <MenuItem onClick={handleNavToLogin}>Sign In</MenuItem>
         )}
