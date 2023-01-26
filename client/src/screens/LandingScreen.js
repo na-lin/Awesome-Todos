@@ -11,10 +11,10 @@ import {
   Button,
   ImageList,
   ImageListItem,
+  Stack,
 } from "@mui/material";
 import { Container } from "@mui/system";
 
-///* <img src={hero} alt="icon" /> */}
 export default function LandingScreen() {
   return (
     <div style={{ backgroundColor: "#ecfeff" }}>
@@ -30,6 +30,20 @@ export default function LandingScreen() {
             </Typography>
           </Box>
         </header>
+        <main>
+          <Box sx={{ display: "flex", alignItems: "center", mt: 8 }}>
+            <div>
+              <Typography variant="h4">
+                Not Only a task management toolkit, but also your accomplishment
+                journal
+              </Typography>
+              <Button variant="outlined">
+                <Typography>Login/Register</Typography>
+              </Button>
+            </div>
+            <img src={hero} alt="icon" />
+          </Box>
+        </main>
       </Container>
     </div>
   );
