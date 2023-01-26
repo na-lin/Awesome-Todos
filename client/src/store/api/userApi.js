@@ -5,15 +5,17 @@ const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3010",
     prepareHeaders: (headers, { getState }) => {
+      console.log("111");
       const token = JSON.parse(localStorage.getItem("jwt"));
       headers.set("authorization", `Bearer ${token}`);
       return headers;
     },
   }),
+  tagTypes: ["logout"],
   endpoints(builder) {
     return {
       fetchLoggedInUser: builder.query({
-        providesTags: ["user"],
+        providesTags: ["login"],
         query: () => {
           return {
             url: "/api/auth/getme",
@@ -23,7 +25,7 @@ const userApi = createApi({
       }),
 
       userLogin: builder.mutation({
-        invalidatesTags: ["user"],
+        invalidatesTags: ["login"],
         query: (body) => {
           return {
             url: "/api/auth/login",
@@ -32,9 +34,23 @@ const userApi = createApi({
           };
         },
       }),
+
+      userLogout: builder.mutation({
+        invalidatesTags: ["logout"],
+        query: () => {
+          return {
+            url: "/api/auth/logout",
+            method: "GET",
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useFetchLoggedInUserQuery, useUserLoginMutation } = userApi;
+export const {
+  useFetchLoggedInUserQuery,
+  useUserLoginMutation,
+  useUserLogoutMutation,
+} = userApi;
 export { userApi };
