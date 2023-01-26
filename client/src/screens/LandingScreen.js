@@ -2,6 +2,7 @@ import React from "react";
 
 import logo from "../images/favicon.ico";
 import hero from "../images/hero-img.svg";
+
 // MUI
 import { Box, Typography, Button, Container } from "@mui/material";
 
@@ -12,6 +13,7 @@ export default function LandingScreen() {
   return (
     <div style={{ backgroundColor: "#ecfeff" }}>
       <Container sx={{ height: "100vh", pt: 4 }}>
+        {/* Nav with icon and name */}
         <header>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <img src={logo} alt="logo" />
@@ -23,7 +25,8 @@ export default function LandingScreen() {
             </Typography>
           </Box>
         </header>
-        <main>
+        {/* hero section */}
+        <main id="hero">
           <Box sx={{ display: "flex", alignItems: "center", mt: 8 }}>
             <div>
               <Typography variant="h4">
