@@ -24,10 +24,8 @@ const valiate = yup.object({
 export default function LoginScreen() {
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      passwordConfirm: "",
     },
     validationSchema: valiate,
     onSubmit: (values) => {
