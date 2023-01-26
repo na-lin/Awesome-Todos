@@ -5,6 +5,9 @@ import hero from "../images/hero-img.svg";
 // MUI
 import { Box, Typography, Button, Container } from "@mui/material";
 
+//Router
+import { Link } from "react-router-dom";
+
 export default function LandingScreen() {
   return (
     <div style={{ backgroundColor: "#ecfeff" }}>
@@ -28,7 +31,9 @@ export default function LandingScreen() {
                 journal
               </Typography>
               <Button variant="outlined">
-                <Typography>Login/Register</Typography>
+                <Typography>
+                  <Link to="/login">Login/Register</Link>
+                </Typography>
               </Button>
             </div>
             <img src={hero} alt="icon" />
