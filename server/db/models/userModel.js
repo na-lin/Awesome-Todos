@@ -28,16 +28,6 @@ const User = db.define("user", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  passwordConfirm: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      confirmPassword(value) {
-        if (value === this.password) return;
-        throw new AppError("Passwords are not the same", 400);
-      },
-    },
-  },
   passwordChangedAt: {
     type: Sequelize.DATE,
   },

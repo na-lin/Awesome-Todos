@@ -7,8 +7,9 @@ import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { Container } from "@mui/system";
 
-// img
-import logo from "../images/favicon.ico";
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../store";
 
 const valiate = yup.object({
   email: yup
@@ -22,6 +23,7 @@ const valiate = yup.object({
 });
 
 export default function LoginScreen() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -29,7 +31,8 @@ export default function LoginScreen() {
     },
     validationSchema: valiate,
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+      dispatch(userLogin(values));
     },
   });
 
@@ -75,7 +78,7 @@ export default function LoginScreen() {
               mb: 4,
             }}
           >
-            <img src={logo} alt="logo" />
+            <img src="./images/favicon.ico" alt="logo" />
             <Typography
               variant="h5"
               sx={{ mx: 2, color: "#209CEE", fontWeight: "bold" }}

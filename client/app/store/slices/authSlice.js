@@ -5,27 +5,16 @@ export const userLogin = createAsyncThunk(
   "user/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      // configure header's Content-Type as JSON
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const { data } = await axios.post(
-        "/api/auth/login",
-        { email, password },
-        config
-      );
+      const { data } = await axios.post("/api/auth/login", { email, password });
 
       // store user's token in local storage
-      localStorage.setItem("userToken", data.userToken);
+      localStorage.setItem("userToken", data.token);
 
       return data;
     } catch (error) {
       // return custom error message from API if any
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
+      if (error.response.data) {
+        return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue(error.message);
       }
@@ -50,22 +39,24 @@ const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {
+  extraReducers(buidler) {
     // login user
-    [userLogin.pending]: (state) => {
+    buidler.addCase(userLogin.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [userLogin.fulfilled]: (state, { payload }) => {
+    });
+
+    buidler.addCase(userLogin.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.userInfo = payload;
-      state.userToken = payload.userToken;
-    },
-    [userLogin.rejected]: (state, { payload }) => {
+      state.userInfo = payload.data.user;
+      state.userToken = payload.token;
+    });
+
+    buidler.addCase(userLogin.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
   },
 });
 
-export default authSlice.reducers;
+export default authSlice.reducer;

@@ -26,9 +26,6 @@ const signup = asyncHandler(async (req, res, next) => {
     passwordConfirm,
   });
 
-  newUser.passwordConfirm = "";
-  await newUser.save({ validate: false });
-
   const token = newUser.generateToken();
 
   newUser.excludePasswordField();

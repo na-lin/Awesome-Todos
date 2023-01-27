@@ -9,7 +9,6 @@ router.use((req, res, next) => {
 });
 
 // Sub-router
-router.use("/template", require("./templateRouter"));
 router.use("/auth", require("./authRouter"));
 router.use("/task", protect, require("./taskRouter"));
 

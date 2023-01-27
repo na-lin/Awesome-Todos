@@ -1,25 +1,27 @@
+// env setting
 const dotenv = require("dotenv");
-dotenv.config();
-const colors = require("colors");
+dotenv.config({ path: "./.env" });
 const keys = require("./config/dev");
 
-const app = require("./app");
 const { db } = require("./db");
+const app = require("./app");
+const seed = require("../script/seed");
 
-// sync to db
-const conectionToDatabase = () => {
-  db.sync()
-    .then(() => {
-      console.log("db synced".bgYellow);
-    })
-    .catch((err) => {
-      console.log("There is error when you try to connect to database".bgRed);
-      console.log("Error stack of Database connect error", err);
-    });
+const init = async () => {
+  try {
+    if (process.env.SEED === "true") {
+      await seed();
+    } else {
+      await db.sync();
+    }
+  } catch (ex) {
+    console.log(ex);
+  }
 };
-conectionToDatabase();
 
-const port = keys.PORT || 3000;
-const server = app.listen(port, () => {
-  console.log(`App running on port ${port}...`.underline.bgGreen);
-});
+// connect to database
+init();
+
+// start listening (and create a 'server' object representing our server)
+const PORT = keys.PORT || 8080;
+app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
