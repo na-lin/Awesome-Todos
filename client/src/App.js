@@ -12,6 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingScreen />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/success" element={<h1>Log in </h1>} />
       </Routes>
     </div>
   );
