@@ -49,7 +49,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (userInfo || userToken) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [userInfo, userToken]);
 
