@@ -7,6 +7,9 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 
 // todo: active color in current dashboard
 
+// Dashboard component
+import TodoDashBoardScreen from "./TodoDashBoardScreen";
+
 export default function DashboardScreen() {
   return (
     <Box>
@@ -50,7 +53,9 @@ export default function DashboardScreen() {
             borderColor: "#eee",
           }}
         >
-          Dashboard content
+          <Box sx={{ width: "50%", bgcolor: "#eee", height: "100vh" }}>
+            <TodoDashBoardScreen />
+          </Box>
         </Box>
       </Box>
     </Box>
