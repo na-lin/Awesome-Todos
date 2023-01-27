@@ -1,16 +1,21 @@
 import React, { useEffect } from "react";
+
+// MUI
+import { Container } from "@mui/system";
 import { Box, Button, TextField, Typography, CssBaseline } from "@mui/material";
+
+//Formik
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 // router
-import { Link } from "react-router-dom";
-import { Container } from "@mui/system";
+import { Link, useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../store";
 
+// Formik validate
 const valiate = yup.object({
   email: yup
     .string("Enter your email")
@@ -23,7 +28,11 @@ const valiate = yup.object({
 });
 
 export default function LoginScreen() {
+  // Redux
   const dispatch = useDispatch();
+  const { userInfo, userToken } = useSelector((state) => state.auth);
+
+  // Formik
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,10 +40,18 @@ export default function LoginScreen() {
     },
     validationSchema: valiate,
     onSubmit: (values) => {
-      // console.log(values);
       dispatch(userLogin(values));
     },
   });
+
+  // router
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo || userToken) {
+      navigate("/dashboard");
+    }
+  }, [userInfo, userToken]);
 
   return (
     <div style={{ backgroundColor: "#ecfeff", height: "100vh" }}>
