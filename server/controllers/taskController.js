@@ -31,4 +31,21 @@ const createTask = asyncHandler(async (req, res, next) => {
   res.status(201).json({ data: { task } });
 });
 
-module.exports = { getAllTask, createTask };
+// @desc: update todo title
+// @route: PUT /api/task/:taskId
+// @access: Private
+const updateTask = asyncHandler(async (req, res, next) => {
+  const { title } = req.body;
+  const [_, task] = await Task.update(
+    { title },
+    {
+      where: {
+        id: req.params.taskId,
+      },
+      returning: true,
+    }
+  );
+  res.status(200).json({ data: { task } });
+});
+
+module.exports = { getAllTask, createTask, updateTask };
