@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 
 // components
 import AddTodo from "../../components/AddTodo";
+import TodoList from "./TodoList";
 
 export default function TodoDashBoardScreen() {
   return (
@@ -12,7 +13,9 @@ export default function TodoDashBoardScreen() {
       <Box>
         <AddTodo />
       </Box>
-      <Box sx={{ bgcolor: "#fb923c" }}>part 2: list of todo</Box>
+      <Box sx={{ mt: 4 }}>
+        <TodoList />
+      </Box>
     </Box>
   );
 }
