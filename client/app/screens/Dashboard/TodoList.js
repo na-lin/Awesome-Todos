@@ -1,26 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // MUI
 import { Box, List, ListItem, Divider } from "@mui/material";
 
-// Dummy data
-const tasks = [
-  {
-    title: "todo 1",
-  },
-  {
-    title: "todo 2",
-  },
-  {
-    title: "todo 3",
-  },
-  {
-    title: "todo 4",
-  },
-];
+// Redux
+import { fetchAllTasks } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TodoList() {
-  const renderTodoTasks = tasks.map((item) => {
+  const dispatch = useDispatch();
+  const { allTasks } = useSelector((state) => state.tasks);
+
+  useEffect(() => {
+    dispatch(fetchAllTasks());
+  }, []);
+
+  const renderTodoTasks = allTasks.map((item) => {
     return <ListItem divider>{item.title}</ListItem>;
   });
 
