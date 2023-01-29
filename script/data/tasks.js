@@ -7,9 +7,11 @@ module.exports = [
   },
   {
     title: "todo 3",
+    state: "completed",
   },
   {
     title: "todo 4",
+    state: "won't do",
   },
   {
     title: "todo 1 - user 2",
