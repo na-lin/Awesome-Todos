@@ -109,7 +109,7 @@ export default function DashboardScreen() {
             borderColor: "#eee",
           }}
         >
-          <Box sx={{ width: "50%", bgcolor: "#eee", height: "100vh" }}>
+          <Box sx={{ width: "50%", height: "100vh" }}>
             <TodoDashBoardScreen />
           </Box>
         </Box>
