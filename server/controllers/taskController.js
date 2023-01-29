@@ -21,4 +21,14 @@ const getAllTask = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { getAllTask };
+// @desc: Create a task
+// @route: POST /api/task
+// @access: Private
+const createTask = asyncHandler(async (req, res, next) => {
+  const { title } = req.body;
+  const task = await Task.create({ title });
+  await req.user.addTask(task);
+  res.status(201).json({ data: { task } });
+});
+
+module.exports = { getAllTask, createTask };
