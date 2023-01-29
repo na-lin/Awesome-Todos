@@ -4,6 +4,7 @@ const {
   getAllTask,
   createTask,
   updateTask,
+  deleteTask,
 } = require("../controllers/taskController");
 const { protect } = require("../controllers/authController");
 
@@ -11,6 +12,6 @@ const { protect } = require("../controllers/authController");
 
 router.route("/").get(protect, getAllTask).post(protect, createTask);
 
-router.route("/:taskId").put(protect, updateTask);
+router.route("/:taskId").put(protect, updateTask).delete(protect, deleteTask);
 
 module.exports = router;

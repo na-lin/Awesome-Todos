@@ -48,4 +48,14 @@ const updateTask = asyncHandler(async (req, res, next) => {
   res.status(200).json({ data: { task } });
 });
 
-module.exports = { getAllTask, createTask, updateTask };
+// @desc: delete task
+// @route: PUT /api/task/:taskId
+// @access: Private
+const deleteTask = asyncHandler(async (req, res, next) => {
+  const task = await Task.findByPk(req.params.taskId);
+  await req.user.removeTask(task);
+  await task.destroy();
+  res.status(204).json("delete the task");
+});
+
+module.exports = { getAllTask, createTask, updateTask, deleteTask };
