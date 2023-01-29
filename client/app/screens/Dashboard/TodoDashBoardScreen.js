@@ -22,7 +22,7 @@ export default function TodoDashBoardScreen() {
         <AddTodo />
       </Box>
       <Box sx={{ mt: 4 }}>
-        <Accordion>
+        <Accordion defaultExpanded>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="todoTasks-content"
@@ -34,7 +34,7 @@ export default function TodoDashBoardScreen() {
             <TodoList />
           </AccordionDetails>
         </Accordion>
-        <Accordion>
+        <Accordion defaultExpanded>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="todoTasks-content"
