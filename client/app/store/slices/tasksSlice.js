@@ -23,13 +23,19 @@ const tasksSlice = createSlice({
   name: "slice",
   initialState: {
     numOfTasks: 0,
-    allTasks: [],
+    todoTasks: [],
+    completedTasks: [],
   },
   reducers: {},
   extraReducers(buidler) {
     buidler.addCase(fetchAllTasks.fulfilled, (state, action) => {
       state.numOfTasks = action.payload.results;
-      state.allTasks = action.payload.data.tasks;
+      state.todoTasks = action.payload.data.tasks.filter(
+        (item) => item.state === "todo"
+      );
+      state.completedTasks = action.payload.data.tasks.filter(
+        (item) => item.state !== "todo"
+      );
     });
   },
 });
