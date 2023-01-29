@@ -34,6 +34,24 @@ export const addTask = createAsyncThunk("task/add", async (task, thunkAPI) => {
   return data;
 });
 
+export const updateTask = createAsyncThunk(
+  "task/update",
+  async ({ taskId, title }, thunkAPI) => {
+    const {
+      auth: { userToken },
+    } = thunkAPI.getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+    const { data } = await axios.put(`/api/task/${taskId}`, { title }, config);
+    return data;
+  }
+);
+
 const tasksSlice = createSlice({
   name: "slice",
   initialState: {
@@ -56,6 +74,17 @@ const tasksSlice = createSlice({
     buidler.addCase(addTask.fulfilled, (state, action) => {
       state.numOfTasks += 1;
       state.todoTasks.push(action.payload.data.task);
+    });
+
+    buidler.addCase(updateTask.fulfilled, (state, action) => {
+      const updatedTodo = state.todoTasks.map((item) => {
+        if (item.id === action.payload.data.task.id) {
+          return action.payload.data.task;
+        } else {
+          return item;
+        }
+      });
+      state.todoTasks = updatedTodo;
     });
   },
 });
