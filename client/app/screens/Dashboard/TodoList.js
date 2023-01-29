@@ -9,14 +9,18 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function TodoList() {
   const dispatch = useDispatch();
-  const { allTasks } = useSelector((state) => state.tasks);
+  const { todoTasks } = useSelector((state) => state.tasks);
 
   useEffect(() => {
     dispatch(fetchAllTasks());
   }, []);
 
-  const renderTodoTasks = allTasks.map((item) => {
-    return <ListItem divider>{item.title}</ListItem>;
+  const renderTodoTasks = todoTasks.map((item) => {
+    return (
+      <ListItem divider key={item.id}>
+        {item.title}
+      </ListItem>
+    );
   });
 
   return <List>{renderTodoTasks} </List>;
