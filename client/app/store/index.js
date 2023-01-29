@@ -13,4 +13,4 @@ const store = configureStore({
 export default store;
 
 export { userLogin } from "./slices/authSlice";
-export { fetchAllTasks } from "./slices/tasksSlice";
+export { fetchAllTasks, addTask } from "./slices/tasksSlice";

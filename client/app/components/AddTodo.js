@@ -4,7 +4,12 @@ import React, { useState } from "react";
 import { Box, Container, IconButton, TextField, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
+// redux
+import { useDispatch } from "react-redux";
+import { addTask } from "../store";
+
 export default function AddTodo() {
+  const dispatch = useDispatch();
   const [todo, setTodo] = useState("");
   const [enterTodo, setEnterTodo] = useState(false);
   const [todoIsValid, setTodoIsValid] = useState(false);
@@ -21,7 +26,7 @@ export default function AddTodo() {
       setTodoIsValid(false);
     } else {
       setTodoIsValid(true);
-      console.log(todo);
+      dispatch(addTask({ title: todo }));
     }
   };
 
