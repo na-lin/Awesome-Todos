@@ -27,6 +27,7 @@ export default function AddTodo() {
     } else {
       setTodoIsValid(true);
       dispatch(addTask({ title: todo }));
+      setTodo("");
     }
   };
 
@@ -38,6 +39,7 @@ export default function AddTodo() {
         fullWidth
         label="Add task, Press Enter to save"
         variant="outlined"
+        value={todo}
         onChange={handleChange}
         onBlur={handleBlur}
         error={todoInputIsInValid}
