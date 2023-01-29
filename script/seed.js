@@ -1,9 +1,10 @@
 ("use strict");
 
-const { db, User } = require("../server/db");
+const { db, User, Task } = require("../server/db");
 
 // data that used to seed
 const usersData = require("./data/users");
+const tasksData = require("./data/tasks");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -20,10 +21,22 @@ async function seed() {
     })
   );
 
+  // Creating Users
+  const tasks = await Promise.all(
+    tasksData.map((data) => {
+      return Task.create(data);
+    })
+  );
+
+  await users[0].setTasks(tasks);
+
   console.log(`seeded ${users.length} user's data `);
+  console.log(`seeded ${tasks.length} tasks data `);
+
   console.log(`seeded successfully`);
   return {
     users,
+    tasks,
   };
 }
 
