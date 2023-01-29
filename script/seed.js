@@ -28,7 +28,8 @@ async function seed() {
     })
   );
 
-  await users[0].setTasks(tasks);
+  await users[0].setTasks(tasks.slice(0, 4));
+  await users[1].setTasks(tasks.slice(4, 8));
 
   console.log(`seeded ${users.length} user's data `);
   console.log(`seeded ${tasks.length} tasks data `);
