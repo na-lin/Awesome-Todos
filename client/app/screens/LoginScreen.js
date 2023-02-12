@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// React toast
+import { toast } from "react-toastify";
+
 //Bootstrap
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -38,7 +41,6 @@ export default function LoginScreen() {
 
   const handleBlur = (e) => {
     const name = e.target.name;
-    const value = e.target.value;
     setEnteredValues((prev) => {
       return { ...prev, [name]: true };
     });
@@ -81,12 +83,11 @@ export default function LoginScreen() {
     }
 
     if (isInvalid) {
-      e.preventDefault();
-      e.stopPropagation();
+      toast.error("Please check your input.");
       return;
     }
     console.log(values);
-
+    toast.success("Loading...");
     // reset state
     setValues({
       name: "",

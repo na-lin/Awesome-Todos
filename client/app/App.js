@@ -1,5 +1,9 @@
 import React from "react";
 
+// React Toast
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Router
 import { Routes, Route } from "react-router-dom";
 // screen
@@ -12,6 +16,7 @@ export default function App() {
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/login" element={<LoginScreen />} />
       </Routes>
+      <ToastContainer position="top-center" />
     </div>
   );
 }

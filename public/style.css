@@ -34,3 +34,8 @@
     max-width: 100%;
   }
 }
+
+/* React Toast */
+.Toastify__toast {
+  text-transform: capitalize;
+}
