@@ -3,3 +3,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* Landing */
+.landing {
+  background-color: #fff;
+}
+
+.text-customize-primary {
+  color: #fbbf24 !important;
+}
+.btn-primary {
+  background-color: #fbbf24 !important;
+  border: #fbbf24 !important;
+}
+
+.info {
+  max-width: px;
+}
