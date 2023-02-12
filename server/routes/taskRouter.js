@@ -1,20 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllTasks,
-  getTask,
-  createNewTask,
-  updateDetail,
-  getTaskDetail,
-  deleteTask,
+  getAllTask,
+  createTask,
   updateTask,
+  deleteTask,
 } = require("../controllers/taskController");
+const { protect } = require("../controllers/authController");
 
 // route start with /api/task
-router.route("/").get(getAllTasks).post(createNewTask);
 
-router.route("/:taskId/detail").put(updateDetail).get(getTaskDetail);
+router.route("/").get(protect, getAllTask).post(protect, createTask);
 
-router.route("/:taskId").get(getTask).delete(deleteTask).put(updateTask);
+router.route("/:taskId").put(protect, updateTask).delete(protect, deleteTask);
 
 module.exports = router;

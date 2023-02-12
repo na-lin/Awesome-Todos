@@ -5,33 +5,31 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/dev");
 const AppError = require("../../utils/appError");
 
-const User = db.define("user", {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true,
+const User = db.define(
+  "user",
+  {
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    passwordChangedAt: {
+      type: Sequelize.DATE,
     },
   },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  passwordChangedAt: {
-    type: Sequelize.DATE,
-  },
-});
+  { timestamp: false }
+);
 
 // @desc: hash password only if password is modified
 User.addHook("beforeSave", async (user) => {

@@ -1,10 +1,19 @@
 import React from "react";
 
 // MUI
-import { Box } from "@mui/material";
+import {
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 // components
 import AddTodo from "../../components/AddTodo";
+import TodoList from "./TodoList";
+import CompletedTasksList from "./completedTasksList";
 
 export default function TodoDashBoardScreen() {
   return (
@@ -12,7 +21,32 @@ export default function TodoDashBoardScreen() {
       <Box>
         <AddTodo />
       </Box>
-      <Box sx={{ bgcolor: "#fb923c" }}>part 2: list of todo</Box>
+      <Box sx={{ mt: 4 }}>
+        <Accordion defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="todoTasks-content"
+            id="todoTasks-header"
+          >
+            <Typography>Todo</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TodoList />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="todoTasks-content"
+            id="todoTasks-header"
+          >
+            <Typography>Completed and Won't do</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <CompletedTasksList />
+          </AccordionDetails>
+        </Accordion>
+      </Box>
     </Box>
   );
 }
