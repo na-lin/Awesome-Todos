@@ -53,6 +53,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.2",
+    "react-toastify": "^9.1.1",
     "redux-logger": "^3.0.6",
     "style-loader": "^3.3.1",
     "supertest": "^6.3.0",
