@@ -26,7 +26,7 @@ export default function LandingScreen() {
             Not Only a task management toolkit, but also your accomplishment
             journal!
           </p>
-          <Link to="/login mt-5">
+          <Link to="/login" className="mt-5">
             <Button size="lg" className="btn-primary">
               Login / Register
             </Button>
