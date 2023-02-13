@@ -17,7 +17,7 @@ import equals from "validator/lib/equals";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { userLogin } from "../store";
+import { userLogin, userSignup } from "../store";
 
 export default function LoginScreen() {
   // dispatch user login
@@ -41,7 +41,6 @@ export default function LoginScreen() {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name, value);
     setValues((prev) => {
       return { ...prev, [name]: value };
     });
@@ -78,6 +77,7 @@ export default function LoginScreen() {
       passwordConfirm: true,
     });
 
+    // check validation
     let isInvalid;
     if (values.isMember) {
       isInvalid =
@@ -94,19 +94,24 @@ export default function LoginScreen() {
       toast.error("Please check your input.");
       return;
     }
-    // toast.success("Loading...");
 
+    // dispatch login / signup action based on isMember
     if (values.isMember) {
       dispatch(userLogin({ email: values.email, password: values.password }));
+    } else {
+      const { name, email, password, passwordConfirm } = values;
+      dispatch(userSignup({ name, email, password, passwordConfirm }));
     }
 
     // reset state
-    setValues({
-      name: "",
-      email: "",
-      password: "",
-      passwordConfirm: "",
-      isMember: true,
+    setValues((prev) => {
+      return {
+        name: "",
+        email: "",
+        password: "",
+        passwordConfirm: "",
+        isMember: prev.isMember,
+      };
     });
 
     setEnteredValues({

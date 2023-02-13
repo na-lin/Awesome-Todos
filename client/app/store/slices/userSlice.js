@@ -21,10 +21,28 @@ export const userLogin = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const { data } = await axios.post("/api/auth/login", { email, password });
+      return data;
+    } catch (error) {
+      // return custom error message from API if any
+      if (error.response.data) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error(error.message);
+      }
+    }
+  }
+);
 
-      // store user's token in local storage
-      localStorage.setItem("userToken", data.token);
-
+export const userSignup = createAsyncThunk(
+  "user/signup",
+  async ({ email, password, name, passwordConfirm }) => {
+    try {
+      const { data } = await axios.post("/api/auth/signup", {
+        email,
+        password,
+        name,
+        passwordConfirm,
+      });
       return data;
     } catch (error) {
       // return custom error message from API if any
@@ -47,7 +65,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logout(state, action) {
+    logout(state) {
       state.userInfo = null;
       removeTokenFromLocalStorage();
     },
@@ -67,6 +85,24 @@ const userSlice = createSlice({
     });
 
     buidler.addCase(userLogin.rejected, (state, { error }) => {
+      state.loading = false;
+      toast.error(`Opps: ${error.message}`);
+    });
+
+    // user Signup
+    buidler.addCase(userSignup.pending, (state) => {
+      state.loading = true;
+    });
+
+    buidler.addCase(userSignup.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.userInfo = payload.data.user;
+      state.userToken = payload.token;
+      addTokenToLocalStorage(payload.token);
+      toast.success(`Welcom Back! ${payload.data.user.name}`);
+    });
+
+    buidler.addCase(userSignup.rejected, (state, { error }) => {
       state.loading = false;
       toast.error(`Opps: ${error.message}`);
     });
