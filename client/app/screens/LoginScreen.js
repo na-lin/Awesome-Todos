@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+// Router
+import { useNavigate } from "react-router-dom";
 
 // React toast
 import { toast } from "react-toastify";
@@ -21,9 +24,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLogin, userSignup } from "../store";
 
 export default function LoginScreen() {
+  // Router
+  const navigate = useNavigate();
   // dispatch user login
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.user);
+  const { loading, userToken } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
 
   // handle form validation
   const [values, setValues] = useState({
