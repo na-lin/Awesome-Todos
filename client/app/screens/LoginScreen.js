@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
+import Spinner from "react-bootstrap/Spinner";
 
 // validator
 import isEmail from "validator/lib/isEmail";
@@ -22,6 +23,7 @@ import { userLogin, userSignup } from "../store";
 export default function LoginScreen() {
   // dispatch user login
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
 
   // handle form validation
   const [values, setValues] = useState({
@@ -103,29 +105,13 @@ export default function LoginScreen() {
       dispatch(userSignup({ name, email, password, passwordConfirm }));
     }
 
-    // reset state
-    setValues((prev) => {
-      return {
-        name: "",
-        email: "",
-        password: "",
-        passwordConfirm: "",
-        isMember: prev.isMember,
-      };
-    });
-
-    setEnteredValues({
-      name: false,
-      email: false,
-      password: false,
-      passwordConfirm: false,
-    });
+    // don't need to reset state because I disable the submit button
   };
 
   return (
     <Container fluid className=" p-5">
       <div className="login mx-auto">
-        <h1 className="text-center mb-5">Welcome back!</h1>
+        <h1 className="text-center mb-5 fw-bold">Welcome back!</h1>
 
         <Form onSubmit={handleSubmit}>
           {/* username */}
@@ -207,18 +193,32 @@ export default function LoginScreen() {
           )}
 
           {/* Submit button */}
-          <Button type="submit" className="w-100 my-3 login__button">
-            {values.isMember ? "Login" : "Register"}
+          <Button type="submit" className="w-100 my-3 " disabled={loading}>
+            {loading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : (
+              <span>{values.isMember ? "Login" : "Register"}</span>
+            )}
           </Button>
         </Form>
 
         {/* Toggle form btw login and register */}
-        <Stack direction="horizontal" gap={1}>
+        <Stack
+          direction="horizontal"
+          gap={1}
+          className="justify-content-center"
+        >
           <p>{values.isMember ? "Not a member yet?" : "Already a member? "}</p>
 
           <p
             onClick={toggleMember}
-            className="text-customize-primary text-decoration-underline"
+            className="text-customize-primary text-decoration-underline cursir-pointer"
           >
             {values.isMember ? "Register" : "Login"}
           </p>
