@@ -15,7 +15,15 @@ import isEmpty from "validator/lib/isEmpty";
 import isLength from "validator/lib/isLength";
 import equals from "validator/lib/equals";
 
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../store";
+
 export default function LoginScreen() {
+  // dispatch user login
+  const dispatch = useDispatch();
+
+  // handle form validation
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -86,8 +94,12 @@ export default function LoginScreen() {
       toast.error("Please check your input.");
       return;
     }
-    console.log(values);
-    toast.success("Loading...");
+    // toast.success("Loading...");
+
+    if (values.isMember) {
+      dispatch(userLogin({ email: values.email, password: values.password }));
+    }
+
     // reset state
     setValues({
       name: "",
