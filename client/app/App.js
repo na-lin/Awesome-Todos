@@ -8,12 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
 // screen
 import { LandingScreen, LoginScreen } from "./screens";
+import { SharedLayout, TaskScreen, JournalScreen } from "./screens/dashboard";
 
 export default function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<h1>dashboard</h1>} />
+        <Route path="/" element={<SharedLayout />}>
+          <Route path="task" element={<TaskScreen />} />
+          <Route path="journal" element={<JournalScreen />} />
+        </Route>
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/login" element={<LoginScreen />} />
       </Routes>
