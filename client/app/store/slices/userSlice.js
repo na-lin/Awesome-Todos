@@ -1,9 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
+
+const addTokenToLocalStorage = (token) => {
+  localStorage.setItem("userToken", token);
+};
+
+const removeTokenFromLocalStorage = () => {
+  localStorage.removeItem("userToken");
+};
+
+const getTokenFromLocalStorage = () => {
+  const result = localStorage.getItem("userToken");
+  const token = result ? result : null;
+  return token;
+};
 
 export const userLogin = createAsyncThunk(
   "user/login",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }) => {
     try {
       const { data } = await axios.post("/api/auth/login", { email, password });
 
@@ -14,49 +29,48 @@ export const userLogin = createAsyncThunk(
     } catch (error) {
       // return custom error message from API if any
       if (error.response.data) {
-        return rejectWithValue(error.response.data);
+        throw new Error(error.response.data.message);
       } else {
-        return rejectWithValue(error.message);
+        throw new Error(error.message);
       }
     }
   }
 );
 
-// initialize userToken from local storage
-const userToken = localStorage.getItem("userToken")
-  ? localStorage.getItem("userToken")
-  : null;
-
 const initialState = {
   loading: false,
   userInfo: null,
-  userToken,
-  error: null,
-  success: false,
+  userToken: getTokenFromLocalStorage(),
 };
 
-const authSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state, action) {
+      state.userInfo = null;
+      removeTokenFromLocalStorage();
+    },
+  },
   extraReducers(buidler) {
     // login user
     buidler.addCase(userLogin.pending, (state) => {
       state.loading = true;
-      state.error = null;
     });
 
     buidler.addCase(userLogin.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.userInfo = payload.data.user;
       state.userToken = payload.token;
+      addTokenToLocalStorage(payload.token);
+      toast.success(`Welcom Back! ${payload.data.user.name}`);
     });
 
-    buidler.addCase(userLogin.rejected, (state, { payload }) => {
+    buidler.addCase(userLogin.rejected, (state, { error }) => {
       state.loading = false;
-      state.error = payload;
+      toast.error(`Opps: ${error.message}`);
     });
   },
 });
 
-export default authSlice.reducer;
+export default userSlice.reducer;

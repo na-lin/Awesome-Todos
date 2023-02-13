@@ -3,3 +3,39 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* Landing */
+.landing {
+  background-color: #fff;
+}
+
+.text-customize-primary {
+  color: #fbbf24 !important;
+}
+.btn-primary {
+  background-color: #fbbf24 !important;
+  border: #fbbf24 !important;
+}
+
+.info {
+  max-width: px;
+}
+
+/* Login Screen */
+.login {
+  max-width: 50%;
+}
+
+.login__button:active {
+  background-color: red;
+}
+
+@media (max-width: 768px) {
+  .login {
+    max-width: 100%;
+  }
+}
+
+/* React Toast */
+.Toastify__toast {
+  text-transform: capitalize;
+}

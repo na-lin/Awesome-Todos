@@ -1,45 +1,44 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 
-// MUI
-import { Box, Typography, Button, Container } from "@mui/material";
-
-//Router
+// Router
 import { Link } from "react-router-dom";
 
 export default function LandingScreen() {
   return (
-    <div style={{ backgroundColor: "#ecfeff" }}>
-      <Container sx={{ height: "100vh", pt: 4 }}>
-        {/* Nav with icon and name */}
-        <header>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <img src="./images/favicon.ico" alt="logo" />
-            <Typography
-              variant="h5"
-              sx={{ mx: 2, color: "#209CEE", fontWeight: "bold" }}
-            >
-              Awesome Todos
-            </Typography>
-          </Box>
-        </header>
-        {/* hero section */}
-        <main id="hero">
-          <Box sx={{ display: "flex", alignItems: "center", mt: 8 }}>
-            <div>
-              <Typography variant="h4">
-                Not Only a task management toolkit, but also your accomplishment
-                journal
-              </Typography>
-              <Button variant="outlined">
-                <Typography>
-                  <Link to="/login">Login/Register</Link>
-                </Typography>
-              </Button>
-            </div>
-            <img src="./images/hero-img.svg" alt="icon" />
-          </Box>
-        </main>
-      </Container>
+    <div className="landing vh-100 d-flex flex-column">
+      <nav className="d-flex flex-row mx-5 py-3">
+        <img src="./images/favicon.ico" alt="logo" className="h-75" />
+
+        <p className="fs-1 ms-2 text-customize-primary fw-bold">
+          Awesome Todos
+        </p>
+        <Link to="/login" className="ms-auto">
+          <Button size="lg" className="btn-primary">
+            Login / Register
+          </Button>
+        </Link>
+      </nav>
+
+      <div className="mx-5 d-flex flex-row">
+        <div className="w-50 h-100 pt-5">
+          <p className="fs-4 mb-5">
+            Not Only a task management toolkit, but also your accomplishment
+            journal!
+          </p>
+          <Link to="/login" className="mt-5">
+            <Button size="lg" className="btn-primary">
+              Login / Register
+            </Button>
+          </Link>
+        </div>
+
+        <img
+          className="ms-4 w-50 h-75"
+          src="./images/hero-img.svg"
+          alt="icon"
+        />
+      </div>
     </div>
   );
 }
